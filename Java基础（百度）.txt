@@ -1,0 +1,569 @@
+Java的基本包java.lang 
+    其中包含有： 
+　　接口：Comparable、Cloneable、Runable等
+　　类：八个基本数据类型封装类、Math、Runtime、Object、String、StringBuffer、Thread、Exception等
+ArrayList和Vector的区别,HashMap和Hashtable的区别
+    答：就ArrayList与Vector主要从二方面来说：
+    一.同步性:Vector是线程安全的，也就是说是同步的，而ArrayList是线程序不安全的，不是同步的。
+　　二.数据增长:当需要增长时,Vector默认增长为原来一培，而ArrayList却是原来的一半ArrayList,Vector, LinkedList的存储性能和特性。
+　　ArrayList和Vector都是使用数组方式存储数据，此数组元素数大于实际存储的数据以便增加和插入元素，它们都允许直接按序号索引元素，但是插入元素要涉及数组元素移动等内存操作，所以索引数据快而插入数据慢，Vector由于使用了synchronized方法（线程安全），通常性能上较ArrayList差，而LinkedList使用双向链表实现存储，按序号索引数据需要进行前向或后向遍历，但是插入数据时只需要记录本项的前后项即可，所以插入速度较快。
+就HashMap与HashTable主要从三方面来说. 
+　　一.历史原因:Hashtable是基于陈旧的Dictionary类的，HashMap是Java 1.2引进的Map接口的一实现 
+　　二.同步性:Hashtable是线程安全的，也就是说是同步的，而HashMap是线程序不安全的，不是同步的 
+　　三.值：只有HashMap允许在一个集合中有一个null键和在一个集合中有多个null值
+　　Hashtable是HashMap的同步版本；HashMap允许有null值和一个null键，但是，Hashtable不允许有任何内容为null。Hashtable类的对象必须覆盖Object类的hashCode()和equals()方法关于其他集合类型。
+　　一.ArrayList 提供快速遍历和快速访问。现在设计了新的 RandomAccess 接口，它指出这种列表支持快速随机访问。Vector也实现了RandomAccess 接口。 
+　　二.遍历HashSet与HashMap时，其顺序是未知的（但添加删除快）。LinkedHashSet和LinkedHashSet是按照元素的插入的顺序遍历的（遍历快）。 
+　　三．TreeSet和TreeMap将保证元素按照元素的自然顺序进行排列。也可以使用一个用户自己实现的比较规则。 
+　　四、HashSet有一个散列表支持它。它为基本操作提供固定时间性能。TreeSet它确保了排序集将按元素升序，根据自然顺序排序。
+Dictionary类 
+　　主要用于将关键字转换成值，该类接收一个关键字并返回一个值。Dictionary是一个抽象类，它是Hashtable的超类。 
+Properties类 
+　　扩展了Hashtable类，但Properties对象的关键字和值必须是String类型，并能将对象写入一个输出流并保存在一个文件中，然后可以把它读回一个输入流。
+　　如果需要维护和搜索一个部件列表，它们由唯一的字母数字序列号标示，其中的部件是Part类型，这时应该使用哪种集合？如果我们改变需求，你也需要能够按顺序、按它们的序列号打印出部件？ 
+　　1、应该选择HashMap 
+　　2、应该选择TreeMap 
+多线程有几种实现方法,都是什么?同步有几种实现方法,都是什么? 
+　　答：多线程有两种实现方法，分别是继承Thread类与实现Runnable接口 
+　　同步的实现方面有两种，分别是synchronized,wait与notify
+抽象类与接口？ 
+　　答：抽象类与接口都用于抽象，但是抽象类(JAVA中)可以有自己的部分实现，而接口则完全是一个标识(同时有多重继承的功能)。
+abstract的method是否可同时是static,是否可同时是native，是否可同时是synchronized? 都不能接口是否可继承接口? 抽象类是否可实现(implements)接口? 抽象类是否可继承实体类(concrete class)? 
+　　接口可以继承接口。抽象类可以实现(implements)接口，抽象类可继承实体类，但前提是实体类必须有明确的构造函数。
+Anonymous Inner Class (匿名内部类) 是否可以extends(继承)其它类，是否可以implements(实现)interface(接口)? 
+　　可以继承其他类或完成其他接口，在swing编程中常用此方式。
+IO流 
+　　字节流：数据在存储时与传输时都是以字节为单位进行的。通常用于读写二进制数据，如图像和声音文件。 
+　　字符流：数据在存储与传输时都是以字符为单位进行的。
+　　流：对数据源的一种抽象，其目的是想用统一的方式访问各种不同的数据源（文件、网络、内存的缓冲区）文件读写的基本类：File类提供定位本地文件系统，描述文件和目录的功能。管道流用于在线程之间通信：PipedInputStream、PipedOutputStream、PipedReader、PipedWriter 
+　　线程1:PipedOutputStream、PipedInputStream：线程2
+　　键盘输入： 
+　　try{ 
+　　BufferedReader br=new BufferedReader(new InputStreamReader(System.in)); 
+　　String s=br.readLine(); 
+　　System.out.println(s); 
+　　}catch(Exception e){ 
+　　}
+　　文件输入输出： 
+　　try{ 
+　　File f=new File("test.txt"); 
+　　FileOutputStream fout=new FileOutputStream(f); 
+　　fout.write(System.in.read()); 
+　　fout.close(); 
+　　FileInputStream fin=new FileInputStream(f); 
+　　int size=fin.available(); 
+　　for(int i=0;i<size;i++){ 
+　　System.out.print((char)fin.read()); 
+　　} 
+　　fin.close(); 
+　　}catch(Exception e){ 
+　　}
+　　通过网络传输文件： 
+　　客户端： 
+　　File f=new File("bk.exe"); 
+　　FileInputStream fin=new FileInputStream(f); 
+　　Socket st=new Socket("localhost",6000); 
+　　BufferedOutputStream bout=new BufferedOutputStream(st.getOutputStream()); 
+　　int size=fin.available(); 
+　　for(int i=0;i<size;i++){ 
+　　bout.write(fin.read()); 
+　　} 
+　　服务器端： 
+　　ServerSocket server=new ServerSocket(6000); 
+　　Socket st=server.accept(); 
+　　File f=new File("kk.exe"); 
+　　BufferedInputStream bin=new BufferedInputStream(st.getInputStream()); 
+　　FileOutputStream fout=new FileOutputStream(f); 
+　　int i=0; 
+　　while(i!=-1){ 
+　　i=bin.read(); 
+　　fout.write(i); 
+　　}
+　　串行化的注意事项以及如何实现串行化 
+　　对象的寿命通常随着生成该对象的程序的终止而终止。有时候，可能需要将对象的状态保存下来，在需要时再将对象恢复。我们把对象的这种能记录自己的状态以便将来再生的能力，叫做对象的持续性(persistence)。对象通过写出描述自己状态的数值来记录自己，这个过程叫对象的串行化(serialization)。 
+　　序列化的过程就是对象写入字节流和从字节流中读取对象。将对象状态转换成字节流之后，可以用java.io包中的各种字节流类将其保存到文件中，管道到另一线程中或通过网络连接将对象数据发送到另一主机。 
+　　一：对象序列化可以实现分布式对象。 
+　　二：java对象序列化不仅保留一个对象的数据，而且递归保存对象引用的每个对象的数据。
+　　常见排序法： 
+　　public class Sort{ 
+　　public static int count=0; 
+　　public boolean LT(int num1,int num2){ 
+　　return num1<num2; 
+　　} 
+　　public void output(int[] array){ 
+　　System.out.print("第"+count+"次排序："); 
+　　for(int i=0;i<array.length;i++) 
+　　System.out.print(array[i]+" "); 
+　　System.out.println(); 
+　　}
+}
+　　// 冒泡排序法 
+　　public void BubbleSort(int[] array){ 
+　　boolean swap=true; 
+　　int index=0;
+　　int i=0; 
+　　while(i<array.length-1){ 
+　　int temp=array[i]; 
+　　for(int j=i;j<array.length;j++){ 
+　　if(!LT(array[i],array[j])){ 
+　　int temp2=array[i]; 
+　　array[i]=array[j]; 
+　　array[j]=temp2; 
+　　swap=true; 
+　　index=j; 
+　　}else{ 
+　　swap=false; 
+　　} 
+　　} 
+　　i++; 
+　　if(swap){ 
+　　array[i]=array[index]; 
+　　array[index]=temp; 
+　　i++; 
+　　} 
+　　output(array); 
+　　} 
+　　}
+}
+　　// 直接插入排序法 
+　　public void InsertSort(int[] array){ 
+　　for(int i=1;i<array.length;++i){ 
+　　if (LT(array[i],array[i-1])){ 
+　　int temp=array[i]; 
+　　array[i]=array[i-1]; 
+　　array[i-1]=temp; 
+　　for(int j=i-1;j>0;--j){ 
+　　if(LT(array[j],array[j-1])){ 
+　　array[j]=array[j-1]; 
+　　array[j-1]=temp; 
+　　}else{ 
+　　break; 
+　　} 
+　　} 
+　　output(array); 
+　　} 
+　　}
+}
+　　// 快速排序法 
+　　private int Partition(int array[],int low,int high){ 
+　　int temp=array[low]; 
+　　int pivotkey=array[low]; 
+　　while(low<high){ 
+　　while(low<high&&array[high]>pivotkey)--high; 
+　　array[low]=array[high]; 
+　　while(low<high&&array[low]<=pivotkey)++low; 
+　　array[high]=array[low]; 
+　　} 
+　　array[low]=temp; 
+　　output(array); 
+　　return low; 
+　　}
+public void qsort(int array[],int low,int high){
+if(low<high){ 
+　　int pivotloc=Partition(array,low,high); 
+　　QSort(array,low,pivotloc-1); 
+　　QSort(array,pivotloc+1,high); 
+　　} 
+　　}
+qsort(int array[],int low,int high){
+　　if(low<high){
+　　int pivotloc=Partition(array,low,high);
+　　QSort(array,low,pivotloc-1);
+　　QSort(array,pivotloc+1,high);
+　　}
+　　}
+void QuickSort(int array[]){ 
+　　QSort(array,0,array.length-1); 
+　　} 
+　　public static void main(String args[]){ 
+　　int array[]={49,38,65,97,76,13,27,49}; 
+　　Sort sort=new Sort();
+　　System.out.println("==================================="); 
+　　sort.output(array); 
+　　System.out.println("优化冒泡排序法"); 
+　　sort.BubbleSort(array);
+　　System.out.println(); 
+　　System.out.println("==================================="); 
+　　array=new int[]{49,38,65,97,76,13,27,49}; 
+　　sort.output(array); 
+　　System.out.println("直接插入排序法"); 
+　　sort.InsertSort(array);
+　　System.out.println("插入排序法");
+　　sort.InsertSort(array);System.out.println(); 
+　　System.out.println("==================================="); 
+　　array=new int[]{49,38,65,97,76,13,27,49}; 
+　　sort.output(array); 
+　　System.out.println("快速排序法"); 
+　　sort.QuickSort(array); 
+　　} 
+　　}
+　　如在COLLECTION框架中，实现比较要实现什么样的接口？ 
+　　Collection框架中实现比较要实现Comparable 接口和 Comparator 接口
+　　什么是线程？ 
+　　线程与进程相似，是一段完成某个特定功能的代码，是程序中单个顺序的流控制；但与进程不同的是，同类的多个线程是共享一块内存空间和一组系统资源，而线程本身的数据通常只有微处理器的寄存器数据，以及一个供程序执行时使用的堆栈。所以系统在产生一个线程，或者在各个线程之间切换时，负担要比进程小的多，正因如此，线程被称为轻负荷进程（light-weight process）。一个进程中可以包含多个线程。
+　　一个线程是一个程序内部的顺序控制流。 
+　　1. 进程：每个进程都有独立的代码和数据空间（进程上下文） ，进程切换的开销大。 
+　　2. 线程：轻量的进程，同一类线程共享代码和数据空间，每个线程有独立的运行栈和程序计数器（PC），线程切换的开销小。 
+　　3. 多进程：在操作系统中，能同时运行多个任务程序。 
+　　4. 多线程：在同一应用程序中，有多个顺序流同时执行。
+　　进程上下文） ，进程切换的开销大。
+　　2. 线程：轻量的进程，同一类线程共享代码和数据空间，每个线程有独立的运行栈和程序计数器（PC），线程切换的开销小。
+　　3. 多进程：在操作系统中，能同时运行多个任务程序。
+　　4. 多线程：在同一应用程序中，有多个顺序流同时执行。同步和异步有和异同，在什么情况下分别使用他们？ 
+　　临界资源问题 
+　　线程都是独立的，而且异步执行，也就是说每个线程都包含了运行时所需要的数据或方法，而不需要外部的资源或方法，也不必关心其它线程的状态或行为。但是经常有一些同时运行的线程需要共享数据，此时就需考虑其他线程的状态和行为，否则就不能保证程序的运行结果的正确性。 
+　　我们需要做的是允许一个线程彻底完成其任务后，再允许下一个线程执行。必须保证一个共享的资源一次只能被一个线程使用。实现此目的的过程称为同步。 
+　　同步是用于确保资源一次只能被一个线程使用的过程。 
+　　同步对于单线程程序没有任何好处。使用同步比非同步的性能差三到四倍。
+　　临界资源问题
+　　线程都是独立的，而且异步执行，也就是说每个线程都包含了运行时所需要的数据或方法，而不需要外部的资源或方法，也不必关心其它线程的状态或行为。但是经常有一些同时运行的线程需要共享数据，此时就需考虑其他线程的状态和行为，否则就不能保证程序的运行结果的正确性。
+　　我们需要做的是允许一个线程彻底完成其任务后，再允许下一个线程执行。必须保证一个共享的资源一次只能被一个线程使用。实现此目的的过程称为同步。
+　　同步是用于确保资源一次只能被一个线程使用的过程。
+　　同步对于单线程程序没有任何好处。使用同步比非同步的性能差三到四倍。线程方法介绍： 
+　　构造函数： 
+　　Thread() 
+　　Thread(Runable target） 
+　　Thread(Runable target，String name） 
+　　Thread(ThreadGroup group,Runable target） 
+　　Thread(ThreadGroup group,Runable target,String name） 
+　　Thread(ThreadGroup group,String name）
+　　用于完成一个线程“实际功能”的代码放在run方法中。Run方法可以在Thread的子类中重写，也可以在Runable对象中重写。一旦线程死去，它就永远不能再重新启动，否则会抛出异常。用start方法启动一个已经启动的线程也会抛出异常。isAlive、interrupt、Thread.currentThread、suspend、resume、stopSleep方法可以使低优先级的线程得到执行的机会，Yield方法只能使同优先级的线程有执行的机会。Join方法能够使调用该方法的线程在此之前执行完毕，在该方法之后，调用join方法的线程不会产生输出了，Wait与notify使用时，需要注意的事项？ 
+　　它们只能用于synchronized同步块中； 
+　　它们需要配对使用； 
+　　Wait一般出现在一个while循环中，while语句使用一个boolean标志控制。
+　　死锁 
+　　当被锁定的A对象试图访问另一个被锁定的B对象，B对象同时又要访问已被锁定的A对象。这样导致两个线程都在等待另一个线程释放资源，这样就出现了死锁。
+　　STRING与STRINGBUFFER的区别。 
+　　答：STRING的长度是不可变的，STRINGBUFFER的长度是可变的。如果你对字符串中的内容经常进行操作，特别是内容要修改时，那么使用StringBuffer，如果最后需要String，那么使用StringBuffer的toString()方法
+　　JDBC调用数据库的基本步骤WEBLOGIC SERVER中的JDBC配置 
+　　1、建立到指定数据库的连接池Connection Pool 
+　　2、建立基于该连接池的数据源DataSource 
+　　3、访问数据库时通过数据源的JNDI名字查找到该数据源，然后通过数据源获得数据库连接对象。得到该对象后就可以依次生成数据库语句对象和结果集对象，进行相应的数据库操作。WEBLOGIC SERVER中的JDBC配置
+　　1、建立到指定数据库的连接池Connection Pool
+　　2、建立基于该连接池的数据源DataSource
+　　3、访问数据库时通过数据源的JNDI名字查找到该数据源，然后通过数据源获得数据库连接对象。得到该对象后就可以依次生成数据库语句对象和结果集对象，进行相应的数据库操作。import java.sql.*; 
+　　import javax.naming.*; 
+　　import javax.sql.*; 
+　　import java.util.*; 
+　　import javax.rmi.*;java.sql.*;
+　　import javax.naming.*;
+　　import javax.sql.*;
+　　importjava.util.*;
+　　importjavax.rmi.*;public class DataSourceTest{ 
+　　private static Context getInitialContext() throws Exception{ 
+　　String url="t3://localhost:7001"; 
+　　String user="system"; 
+　　String password="11111111"; 
+　　Properties properties=null;
+　　try{ 
+　　properties=new Properties(); 
+　　properties.put(Context.INITIAL_CONTEXT_FACTORY, 
+　　"weblogic.jndi.WLInitialContextFactory"); 
+　　properties.put(Context.PROVIDER_URL,url);
+　　if(user!=null){ 
+　　properties.put(Context.SECURITY_PRINCIPAL,user); 
+　　properties.put(Context.SECURITY_CREDENTIALS, 
+　　password==null?"":password); 
+　　}
+　　return new InitialContext(properties); 
+　　}catch(Exception e){ 
+　　throw e; 
+　　} 
+　　}
+　　public static void main(String args[]){ 
+　　UserTransaction tx=null; 
+　　DataSource ds=null; 
+　　Context ctx=null; 
+　　Connection myConn=null;
+　　try{ 
+　　ctx=getInitialContext();
+　　tx=(UserTranscation)ctx.lookup("javax.transcation.UserTranscation"); 
+　　tx.begin();
+　　ds=(DataSource)ctx.lookup("myTxDataSource"); 
+　　}catch(Exception e){ 
+　　e.printStackTrace(); 
+　　}
+　　Statement myStatement=null; 
+　　ResultSet myResultSet=null;
+　　try{ 
+　　myConn=ds.getConnection(); 
+　　myStatement=myConn.createStatement(); 
+　　myResultSet=myStatement.executeQuery( 
+　　"select fullname from employee");
+　　while(myResultSet.next()){ 
+　　System.out.println(myResultSet.getString("fullname")); 
+　　}
+　　tx.commit(); 
+　　}catch(Exception e){ 
+　　try{ 
+　　tx.rollback(); 
+　　}catch(Exception e){ 
+　　} 
+　　}finally{ 
+　　myStatement.close(); 
+　　myConn.close(); 
+　　} 
+　　} 
+　　}
+　　import javax.xml.parsers.*; 
+　　import javax.xml.transform.*; 
+　　import javax.xml.transform.dom.*; 
+　　import javax.xml.transform.stream.*;
+　　import java.io.*;public class Student{ 
+　　public static void main(String args[]){ 
+　　Document doc; 
+　　Element students; 
+　　Element stud; 
+　　Element fName; 
+　　Element sName; 
+　　try{ 
+　　DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance(); 
+　　DocumentBuilder db=dbf.newDocumentBuilder(); 
+　　doc=db.newDocument();
+　　stud=doc.createElement("Student");fName=doc.createElement("FirstName");; 
+　　fName.appendChild(doc.createTextNode("John")); 
+　　stud.appendChild(fName);
+　　sName=doc.createElement("surname"); 
+　　sName.appendChild(doc.createTextNode("David")); 
+　　stud.appendChild(sName);surname");
+　　sName.appendChild(doc.createTextNode("David"));
+　　stud.appendChild(sName);students=doc.createElement("Students"); 
+　　students.setAttribute("Department","Mathematics"); 
+　　students.appendChild(stud);
+　　doc.appendChild(students);TransformerFactory tf=TransformerFactory.newInstance(); 
+　　Transformer transformer=tf.newTransformer(); 
+　　transformer.transform(new DOMSource(doc),new StreamResult(System.out));
+　　}catch(Exception e){ 
+　　e.printStackTrace(); 
+　　} 
+　　} 
+　　} 
+　　使用DOM API显示现有XML文档内容
+　　使用DOM API将XML文档数据插入数据库使用DOM API根据数据库创建XML文档Java的国际化 
+　　国际化是为了将应用程序发布在多个地区（locale）而进行准备的过程。不同地区标识了各个特定的国家在信息表现上所广泛使用的语言、流通货币、字符集、日期格式及其他要素。
+　　支持国际化的应用程序具有以下特点： 
+　　1、不用改变代码就可以支持另外的语言。 
+　　2、文本元素、消息和图片保存在源代码之外。 
+　　3、将于文化背景有关的数据，比如日期和时间、十进制数值以及流通货币，根据用户所用的语言和所在地理位置进行正确格式化。 
+　　4、支持非标准字符集。 
+　　5、应用程序可以快速适应新的语言区域。
+　　为了使一个应用程序国际化，： 
+　　1、必须将用户所见到的硬编码字符（如标签、工具提示和错误信息等）替换成包含在资源包ResourceBundle中的字符。它是一个java属性文件，它将关键字映射为字符值。并且可以使用多个不同语言版本的ResourceBundle，这样将可以对于不同语言提供不同的字符串。 
+　　2、使用Locale对象，可以使数据格式化为与地区相关的数据。 
+　　3、国际化的应用程序还必须使用统一的字符编码标准字符集。
+　　ResourceBundle中的字符。它是一个java属性文件，它将关键字映射为字符值。并且可以使用多个不同语言版本的ResourceBundle，这样将可以对于不同语言提供不同的字符串。
+　　2、使用Locale对象，可以使数据格式化为与地区相关的数据。
+　　3、国际化的应用程序还必须使用统一的字符编码标准字符集。应用服务器有那些？Servlet方面 
+　　什么是Servlet？ 
+　　Servlet是J2EE应用框架中部署于Web层的Web组件，运行在支持Servlet的Web服务器或应用服务器上。Servlet为客户端和服务器端的信息处理提供了一种“请求/响应”机制。 
+　　客户程序将请求发送到服务器；服务器将请求发送到Servlet；依据客户程序的请求，Servlet动态地构造回答信息并返回给服务器；服务器将回答返回给客户程序。
+　　什么是JSP？ 
+　　JSP是J2EE应用框架中部署于Web层的Web组件，是对Servlet技术的扩展。它使在静态的页面中加入动态的内容变得非常容易。并且通过使用标签库可以大大节省开发时间；将JavaBean与JSP一起使用可以将数据表示和程序实现分离。
+　　在MVC架构模式中： 
+　　使用Servlet作为控制器，而JSP作为数据视图。
+　　CGI与Servlet的区别？ 
+　　CGI（公共网关接口）是一项标准，使WEB服务器可以与外部应用程序交互。但是该技术存在一些严重的限制： 
+　　1、CGI应用程序占用资源很多。当系统要处理来自一个用户的请求时，就会创建一个新的进程来处理该请求，一旦CGI脚本停止执行，系统就必须收回该进程。这种重量级进程的经常启动和停止非常低效。 
+　　2、CGI很难链接于请求进程的其他阶段，因为在WEB服务器上它们运行于不同的进程。这就很难处理授权、工作流和日志记录工作。 
+　　Java Servlet技术提供了一个基于组件、与平台无关的方法来构建WEB应用程序。Servlet没有标准CGI应用程序所遇到的性能局限。 
+　　Servlet比CGI更高效是因为： 
+　　Servlet应用中将只创建一个单一个重量级进程，并对每个用户请求使用更轻量级的线程来完成请求处理，并且这些线程是由JVM自动维护。每个客户端请求对应一个线程，每个Servlet类在Servlet容器中只存在一个唯一的对象（实例）。Servlet类首次加载后将常驻内存。
+　　常驻内存。1、说一说Servlet的生命周期? 
+　　答:在第一次请求Servlet时将创建Servlet实例，容器调用实例的init方法，如果容器有请求要传送给servlet，它就会调用servlet实例的Service方法。一个请求将作为一个线程。如果服务器要销毁servlet实例就会调用servlet实例的destory方法，否则该实例将会常驻内存。 
+　　JAVA SERVLET API中forward() 与redirect()的区别？ 
+　　使用重定向：当调用sendRedirect方法时，Web容器就会向浏览器返回响应，指示需要新的URL。因为浏览器发出了完全崭新的请求，所以在重定向之前存储为请求属性的任何对象都会消失。 
+　　使用转发：当为一个请求调用转发时，请求就发送给服务器上另一个资源，而无需通知客户机由不同的资源处理请求。这个过程完全在Web容器内部进行，客户机绝不知晓。与重定向不同，转发过程中，对象可以存储在请求中，并发送给下一个资源使用。 
+　　因为转发过程完全在服务器上进行，与客户机没用通信，因此转发的性能优于重定向。 
+　　但是如果在JSP页面上使用图形的相对路径和其他资源，转发机制就会带来问题。因为浏览器无从得知发生了转发，所以相对路径只是相对初始的Servlet，而不是所转发到的JSP页面。使用JSP自定义标签可以解决这个问题。
+　　如何现实servlet的单线程模式servlet的配置4、Servlet的基本架构 
+　　public class ServletName extends HttpServlet { 
+　　public void doPost(HttpServletRequest request, HttpServletResponse response) throws 
+　　ServletException, IOException { 
+　　} 
+　　public void doGet(HttpServletRequest request, HttpServletResponse response) throws 
+　　ServletException, IOException { 
+　　} 
+　　}
+　　HttpServlet{
+　　public void doPost(HttpServletRequest request, HttpServletResponse response) throws
+　　ServletException, IOException {
+　　}
+　　public void doGet(HttpServletRequest request, HttpServletResponse response) throws
+　　ServletException, IOException {
+　　}
+　　}JSP中动态INCLUDE与静态include的区别？ 
+　　答：动态INCLUDE用jsp:include动作实现 
+　　<jsp:include page="included.jsp" flush="true" />它总是会检查所含文件中的变化，适合用于包含动态页面，并且可以带参数 
+　　静态INCLUDE用include伪码实现,定不会检查所含文件的变化，适用于包含静态页面 
+　　<%@ include file="included.htm" %> 
+　　可能会让你写一段Jdbc连Oracle的程序,并实现数据查询. 
+　　答:程序如下： 
+　　package hello.ant; 
+　　import java.sql.*; 
+　　public class jdbc { 
+　　String dbUrl="jdbc:oracle:thin:@127.0.0.1:1521:orcl"; 
+　　String theUser="admin"; 
+　　String thePw="manager"; 
+　　Connection c=null; 
+　　Statement conn; 
+　　ResultSet rs=null; 
+　　public jdbc() { 
+　　try{ 
+　　Class.forName("oracle.jdbc.driver.OracleDriver").newInstance(); 
+　　c = DriverManager.getConnection(dbUrl,theUser,thePw); 
+　　conn=c.createStatement(); 
+　　}catch(Exception e){ 
+　　e.printStackTrace(); 
+　　} 
+　　} 
+　　public boolean executeUpdate(String sql) { 
+　　try { 
+　　conn.executeUpdate(sql); 
+　　return true; 
+　　} catch (SQLException e) { 
+　　e.printStackTrace(); 
+　　return false; 
+　　} 
+　　} 
+　　public ResultSet executeQuery(String sql) { 
+　　rs=null; 
+　　try { 
+　　rs=conn.executeQuery(sql); 
+　　} catch (SQLException e) { 
+　　e.printStackTrace(); 
+　　} 
+　　return rs; 
+　　} 
+　　public void close(){ 
+　　try { 
+　　conn.close(); 
+　　c.close(); 
+　　} catch (Exception e) { 
+　　e.printStackTrace(); 
+　　} 
+　　} 
+　　public static void main(String[] args) { 
+　　ResultSet rs; 
+　　jdbc conn = new jdbc(); 
+　　rs=conn.executeQuery("select * from test"); 
+　　try{ 
+　　while (rs.next()) { 
+　　System.out.println(rs.getString("id")); 
+　　System.out.println(rs.getString("name")); 
+　　} 
+　　}catch(Exception e) { 
+　　e.printStackTrace(); 
+　　} 
+　　} 
+　　}动态INCLUDE与静态include的区别？
+　　答：动态INCLUDE用jsp:include动作实现
+　　它总是会检查所含文件中的变化，适合用于包含动态页面，并且可以带参数
+　　静态INCLUDE用include伪码实现,定不会检查所含文件的变化，适用于包含静态页面
+　　可能会让你写一段Jdbc连Oracle的程序,并实现数据查询.
+　　答:程序如下：
+　　package hello.ant;
+　　import java.sql.*;
+　　public class jdbc {
+　　String dbUrl="jdbc:oracle:thin:@127.0.0.1:1521:orcl";
+　　String theUser="admin";
+　　String thePw="manager";
+　　Connection c=null;
+　　Statement conn;
+　　ResultSet rs=null;
+　　public jdbc() {
+　　try{
+　　Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+　　c = DriverManager.getConnection(dbUrl,theUser,thePw);
+　　conn=c.createStatement();
+　　}catch(Exception e){
+　　e.printStackTrace();
+　　}
+　　}
+　　public boolean executeUpdate(String sql) {
+　　try {
+　　conn.executeUpdate(sql);
+　　return true;
+　　} catch (SQLException e) {
+　　e.printStackTrace();
+　　return false;
+　　}
+　　}
+　　public ResultSet executeQuery(String sql) {
+　　rs=null;
+　　try {
+　　rs=conn.executeQuery(sql);
+　　} catch (SQLException e) {
+　　e.printStackTrace();
+　　}
+　　return rs;
+　　}
+　　public void close(){
+　　try {
+　　conn.close();
+　　c.close();
+　　} catch (Exception e) {
+　　e.printStackTrace();
+　　}
+　　}
+　　public static void main(String[] args) {
+　　ResultSet rs;
+　　jdbc conn = new jdbc();
+　　rs=conn.executeQuery("select * from test");
+　　try{
+　　while (rs.next()) {
+　　System.out.println(rs.getString("id"));
+　　System.out.println(rs.getString("name"));
+　　}
+　　}catch(Exception e) {
+　　e.printStackTrace();
+　　}
+　　}
+　　}
+　　说出在JSP页面里是怎么分页的? 
+　　页面需要保存以下参数： 
+　　总行数：根据sql语句得到总行数 
+　　每页显示行数：设定值 
+　　当前页数：请求参数 
+　　页面根据当前页数和每页行数计算出当前页第一行行数，定位结果集到此行，对结果集取出每页显示行数的行即可。
+　　说出在JSP页面里是怎么分页的? 
+　　页面需要保存以下参数： 
+　　总行数：根据sql语句得到总行数 
+　　每页显示行数：设定值 
+　　当前页数：请求参数 
+　　页面根据当前页数和每页行数计算出当前页第一行行数，定位结果集到此行，对结果集取出每页显示行数的行即可。
+　　设计模式方面 
+　　1、开发中都用到了那些设计模式?用在什么场合? 
+　　答：人们在自己的环境中不断发现问题和寻找问题的解决方案的时候，发现有一些问题及其解决方案不断变换面孔重复出现，但在这些不同的面孔后面有着共同的本质，这些共同的本质就是模式。设计模式就是用来描述解决这些问题的解决方案的核心的。
+　　工厂模式 
+　　专门负责将大量有共同接口的类实例化。工厂模式可以动态确定将那一个类实例化，不必事先知道每次要实例化那一个类。
+　　简单工厂模式 
+　　或称静态工厂方法模式。简单工厂模式是由一个工厂对象决定创建出哪一种产品类的实例。简单工厂模式就是由一个工厂类根据传入的参数决定创建那一种产品类的实例。 
+　　简单工厂模式涉及到工厂角色、抽象产品角色以及具体产品角色：l工厂类角色：含有与应用紧密相关的商业逻辑。工厂类在客户端的直接调用下创建产品对象。l抽象产品角色：担任这个角色的类是由工厂方法模式所创建的对象的父类，或它们共同拥有的接口。l具体产品角色：工厂方法模式所创建的任何对象都是这个角色的实例。 
+　　优点是：允许客户端相对独立于产品创建的过程，并且在系统引入新产品的时候无需修改客户端。缺点是：如果有新的产品加入到系统中去，就需要修改工厂类，将必要的逻辑加入到工厂类中。 
+　　工厂方法模式 
+　　或称多态性工厂模式。工厂方法模式的用意是定义一个创建产品对象的工厂接口，将实际创建工作推迟到子类中。工厂方法模式中，核心的工厂类不再负责所有的产品的创建，而是将具体创建的工作交给子类去做。它仅负责给出具体工厂子类必须实现的接口。这样可以用来允许系统在不修改具体工厂角色的情况下引进新的产品。 
+　　工厂方法模式涉及到的角色：l抽象工厂角色：它不包含应用逻辑。任何在模式中创建对象的工厂类必须实现这个接口。l具体工厂角色：含有与应用密切相关的逻辑，并且受到应用程序的调用以创建产品对象。l抽象产品角色：工厂方法模式所创建的对象的超类型，也就是产品对象的共同父类或共同拥有的接口。l具体产品角色：这个角色实现了抽象产品角色所声明的接口。 
+　　单例模式 
+　　确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。 
+　　特点：单例类只能有一个实例；单例类必须自己创建自己的惟一的实例；单例类必须给所有其他对象提供这一实例。 
+　　多例模式 
+　　多例类可以有多个实例，并且多例类必须自己创建、管理自己的实例，并向外界提供自己的实例。 
+　　在系统中可以用于数据库连接池、键值缓存等。 
+　　代理模式 
+　　给某个对象提供一个代理对象，并由代理对象控制对原对象的引用。 
+　　代理模式所涉及的角色：抽象主题角色：声明了真实主题和代理主题的共同接口，这样一来在任何可以使用真实主题的地方都可以使用代理主题角色。简单工厂模式
+　　或称静态工厂方法模式。简单工厂模式是由一个工厂对象决定创建出哪一种产品类的实例。简单工厂模式就是由一个工厂类根据传入的参数决定创建那一种产品类的实例。
+　　简单工厂模式涉及到工厂角色、抽象产品角色以及具体产品角色：l工厂类角色：含有与应用紧密相关的商业逻辑。工厂类在客户端的直接调用下创建产品对象。l抽象产品角色：担任这个角色的类是由工厂方法模式所创建的对象的父类，或它们共同拥有的接口。l具体产品角色：工厂方法模式所创建的任何对象都是这个角色的实例。
+　　优点是：允许客户端相对独立于产品创建的过程，并且在系统引入新产品的时候无需修改客户端。缺点是：如果有新的产品加入到系统中去，就需要修改工厂类，将必要的逻辑加入到工厂类中。
+　　工厂方法模式
+　　或称多态性工厂模式。工厂方法模式的用意是定义一个创建产品对象的工厂接口，将实际创建工作推迟到子类中。工厂方法模式中，核心的工厂类不再负责所有的产品的创建，而是将具体创建的工作交给子类去做。它仅负责给出具体工厂子类必须实现的接口。这样可以用来允许系统在不修改具体工厂角色的情况下引进新的产品。
+　　工厂方法模式涉及到的角色：l抽象工厂角色：它不包含应用逻辑。任何在模式中创建对象的工厂类必须实现这个接口。l具体工厂角色：含有与应用密切相关的逻辑，并且受到应用程序的调用以创建产品对象。l抽象产品角色：工厂方法模式所创建的对象的超类型，也就是产品对象的共同父类或共同拥有的接口。l具体产品角色：这个角色实现了抽象产品角色所声明的接口。
+　　单例模式
+　　确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。
+　　特点：单例类只能有一个实例；单例类必须自己创建自己的惟一的实例；单例类必须给所有其他对象提供这一实例。
+　　多例模式
+　　多例类可以有多个实例，并且多例类必须自己创建、管理自己的实例，并向外界提供自己的实例。
+　　在系统中可以用于数据库连接池、键值缓存等。
+　　代理模式
+　　给某个对象提供一个代理对象，并由代理对象控制对原对象的引用。
+　　代理模式所涉及的角色：抽象主题角色：声明了真实主题和代理主题的共同接口，这样一来在任何可以使用真实主题的地方都可以使用代理主题角色。
